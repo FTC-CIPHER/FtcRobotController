@@ -14,7 +14,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "LinearSlideTesting")
 public class LinearSlideTesting extends LinearOpMode {
-    double speedCoefficient = 0.5;
+     static class Properties {
+         // The global coefficient for motor speed.
+         // Modify this value will change the speed of all motors in the robot.
+         public static double speedCoefficient = 0.5;
+
+    }
+
+
     double GyroYawDisplay;
     double GyroYaw;
     double MecanumTheta;
@@ -71,8 +78,7 @@ public class LinearSlideTesting extends LinearOpMode {
     private DcMotor driveMotorBackLeft;
     private DcMotor driveMotorBackRight;
 
-    @Override
-    public void runOpMode() {
+    public LinearSlideTesting() {
         LinearSlideBackLeft = hardwareMap.get(Servo.class, "HiTechl");
         LinearSlideBackRight = hardwareMap.get(Servo.class, "HiTechr");
         ViperSlidel = hardwareMap.get(Servo.class, "ViperSlidel");
@@ -103,8 +109,10 @@ public class LinearSlideTesting extends LinearOpMode {
         SlideMotorl.setDirection(DcMotorSimple.Direction.REVERSE);
         SlideMotorr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         SlideMotorr.setMode((DcMotor.RunMode.RUN_USING_ENCODER));
+    }
 
-
+    @Override
+    public void runOpMode() {
         waitForStart();
         while (opModeIsActive()) {
             GamepadLeftY = gamepad1.left_stick_y;
@@ -128,10 +136,10 @@ public class LinearSlideTesting extends LinearOpMode {
             MecanumMax = Math.max(Math.abs(MecanumSin), Math.abs(MecanumCos));
 
 
-            LeftFrontDrivePower = (MecanumPower * MecanumCos / MecanumMax + GamepadRightX) * speedCoefficient;
-            RightFrontDrivePower = (MecanumPower * MecanumSin / MecanumMax - GamepadRightX) * speedCoefficient;
-            LeftBackDrivePower = (MecanumPower * MecanumSin / MecanumMax + GamepadRightX) * speedCoefficient;
-            RightBackDrivePower = (MecanumPower * MecanumCos / MecanumMax - GamepadRightX) * speedCoefficient;
+            LeftFrontDrivePower = (MecanumPower * MecanumCos / MecanumMax + GamepadRightX) * Properties.speedCoefficient;
+            RightFrontDrivePower = (MecanumPower * MecanumSin / MecanumMax - GamepadRightX) * Properties.speedCoefficient;
+            LeftBackDrivePower = (MecanumPower * MecanumSin / MecanumMax + GamepadRightX) * Properties.speedCoefficient;
+            RightBackDrivePower = (MecanumPower * MecanumCos / MecanumMax - GamepadRightX) * Properties.speedCoefficient;
 
 
             double maxPower = Math.max(Math.max(Math.abs(LeftFrontDrivePower), Math.abs(RightFrontDrivePower)), Math.max(Math.abs(LeftBackDrivePower), Math.abs(RightBackDrivePower)));
@@ -144,9 +152,9 @@ public class LinearSlideTesting extends LinearOpMode {
 
 
             if (gamepad1.left_trigger == 1) {
-                speedCoefficient = 1.0;
+                Properties.speedCoefficient = 1.0;
             } else {
-                speedCoefficient = 0.5;
+                Properties.speedCoefficient = 0.5;
             }
 
 
@@ -346,7 +354,7 @@ public class LinearSlideTesting extends LinearOpMode {
 
             telemetry.addData("Current Mode", CurrentMode);
             telemetry.addData("IMU", GyroYawDisplay);
-            telemetry.addData("Speed Coefficient", speedCoefficient);
+            telemetry.addData("Speed Coefficient", Properties.speedCoefficient);
             telemetry.addData("LeftFrontPower", LeftFrontDrivePower);
             telemetry.addData("RightFrontPower", RightFrontDrivePower);
             telemetry.addData("LeftBackPower", LeftBackDrivePower);
