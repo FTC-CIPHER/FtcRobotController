@@ -72,11 +72,7 @@ public class LinearSlideTesting extends LinearOpMode {
     private DcMotor driveMotorBackRight;
 
     @Override
-
-
     public void runOpMode() {
-
-
         LinearSlideBackLeft = hardwareMap.get(Servo.class, "HiTechl");
         LinearSlideBackRight = hardwareMap.get(Servo.class, "HiTechr");
         ViperSlidel = hardwareMap.get(Servo.class, "ViperSlidel");
