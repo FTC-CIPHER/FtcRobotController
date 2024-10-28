@@ -21,6 +21,20 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
+    sourceSets {
+        main {
+            java {
+                exclude '**/LeftRedAuto.java'
+                exclude '**/RightRedAuto.java'
+                exclude '**/MecanumDrive.java'
+            }
+        }
+        androidTest {
+            java {
+                //exclude '**/TestSomeExcludedClass.java'
+            }
+        }
+    }
 }
 
 dependencies {
