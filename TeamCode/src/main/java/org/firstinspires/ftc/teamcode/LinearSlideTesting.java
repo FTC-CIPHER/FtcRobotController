@@ -77,6 +77,7 @@ public class LinearSlideTesting extends LinearOpMode {
     private DcMotor driveMotorFrontRight;
     private DcMotor driveMotorBackLeft;
     private DcMotor driveMotorBackRight;
+    private IMU imu;
 
     public LinearSlideTesting() {
         LinearSlideBackLeft = hardwareMap.get(Servo.class, "HiTechl");
@@ -94,7 +95,7 @@ public class LinearSlideTesting extends LinearOpMode {
         driveMotorFrontRight = hardwareMap.get(DcMotor.class, "rightFront");
         driveMotorBackLeft = hardwareMap.get(DcMotor.class, "leftBack");
         driveMotorBackRight = hardwareMap.get(DcMotor.class, "rightBack");
-        IMU imu = hardwareMap.get(IMU.class, "imu");
+        imu = hardwareMap.get(IMU.class, "imu");
 
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
