@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import android.app.ActionBar;
-
-
 import androidx.annotation.NonNull;
 
 
@@ -21,10 +18,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 
 @Config

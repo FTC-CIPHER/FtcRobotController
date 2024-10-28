@@ -1,14 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.hardware.usb.UsbConfiguration;
-import android.transition.Slide;
-import android.widget.HorizontalScrollView;
-
-
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,13 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-//import org.firstinspires.ftc.teamcode;
-
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 @TeleOp(name = "LinearSlideTesting")
@@ -108,9 +95,7 @@ public class LinearSlideTesting extends LinearOpMode {
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
 
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
 
 
         imu.initialize(parameters);
@@ -153,8 +138,7 @@ public class LinearSlideTesting extends LinearOpMode {
             RightBackDrivePower = (MecanumPower * MecanumCos / MecanumMax - GamepadRightX) * speedCoefficient;
 
 
-            double maxPower = Math.max(Math.max(Math.abs(LeftFrontDrivePower), Math.abs(RightFrontDrivePower)),
-                    Math.max(Math.abs(LeftBackDrivePower), Math.abs(RightBackDrivePower)));
+            double maxPower = Math.max(Math.max(Math.abs(LeftFrontDrivePower), Math.abs(RightFrontDrivePower)), Math.max(Math.abs(LeftBackDrivePower), Math.abs(RightBackDrivePower)));
             if (maxPower > 1) {
                 LeftFrontDrivePower /= maxPower;
                 RightFrontDrivePower /= maxPower;
