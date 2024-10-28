@@ -1,16 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 
-
-
 import android.app.ActionBar;
 
 
-
-
 import androidx.annotation.NonNull;
-
-
 
 
 import com.acmerobotics.dashboard.config.Config;
@@ -27,43 +21,48 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 
-
-
 @Config
 @Autonomous(name = "RightRedAuto", group = "Autonomous")
 public class RightRedAuto extends LinearOpMode {
-    public class HorizontalSlides{
+    public class HorizontalSlides {
         private Servo HiTechl;
         private Servo HiTechr;
+
         public HorizontalSlides(HardwareMap hardwareMap) {
             HiTechl = hardwareMap.get(Servo.class, "HiTechl");
             HiTechr = hardwareMap.get(Servo.class, "HiTechr");
         }
+
         public class TransferHorizontal implements Action {
             private boolean initialized = false;
+
             @Override
-            public boolean run(@NonNull TelemetryPacket packet){
+            public boolean run(@NonNull TelemetryPacket packet) {
                 HiTechl.setPosition(0.5193);
                 HiTechr.setPosition(0.4881);
                 //sleep(2000);
                 int delay = 2000; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
+
         public Action TransferHorizontal() {
             return new TransferHorizontal();
         }
     }
+
     public class Lift {
         private DcMotorEx SlideMotorl;
         private DcMotorEx SlideMotorr;
+
         public Lift(HardwareMap hardwareMap) {
             SlideMotorl = hardwareMap.get(DcMotorEx.class, "SlideMotorl");
             SlideMotorr = hardwareMap.get(DcMotorEx.class, "SlideMotorr");
@@ -73,10 +72,9 @@ public class RightRedAuto extends LinearOpMode {
             SlideMotorl.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             SlideMotorr.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         }
+
         public class LiftUp implements Action {
             private boolean initialized = false;
-
-
 
 
             @Override
@@ -101,7 +99,7 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(2000);
                 int delay = 2000; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
                 //} else {
                 //    SlideMotorl.setPower(0);
@@ -112,19 +110,13 @@ public class RightRedAuto extends LinearOpMode {
         }
 
 
-
-
         public Action LiftUp() {
             return new LiftUp();
         }
 
 
-
-
         public class LiftDown implements Action {
             private boolean initialized = false;
-
-
 
 
             @Override
@@ -147,7 +139,7 @@ public class RightRedAuto extends LinearOpMode {
                 SlideMotorr.setPower(-1);
                 int delay = 2000; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
                 // } else {
                 //    SlideMotorl.setPower(0);
@@ -158,47 +150,54 @@ public class RightRedAuto extends LinearOpMode {
         }
 
 
-
-
         public Action LiftDown() {
             return new LiftDown();
         }
     }
-    public class ClawFront{
+
+    public class ClawFront {
         private Servo FrontClawGrab;
-        public ClawFront(HardwareMap hardwareMap){
+
+        public ClawFront(HardwareMap hardwareMap) {
             FrontClawGrab = hardwareMap.get(Servo.class, "FrontClawGrab");
         }
-        public class FrontClawOpen implements Action{
+
+        public class FrontClawOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 FrontClawGrab.setPosition(0.525);
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
+
         public Action FrontClawOpen() {
             return new ClawFront.FrontClawOpen();
         }
-        public class FrontClawClose implements Action{
+
+        public class FrontClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 FrontClawGrab.setPosition(0.9);
                 return false;
             }
         }
+
         public Action FrontClawClose() {
             return new ClawFront.FrontClawClose();
         }
     }
+
     public class ClawRear {
         private Servo BackClawGrab;
+
         public ClawRear(HardwareMap hardwareMap) {
             BackClawGrab = hardwareMap.get(Servo.class, "BackClawGrab");
         }
+
         public class RearClawOpen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -206,13 +205,15 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
+
         public Action RearClawOpen() {
             return new RearClawOpen();
         }
+
         public class RearClawClose implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -220,23 +221,27 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(1000);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
+
         public Action RearClawClose() {
             return new RearClawClose();
         }
     }
+
     public class BackRotate {
         private Servo ViperSlidel;
         private Servo ViperSlider;
         public Servo BackClawGrab;
-        public BackRotate(HardwareMap hardwareMap){
+
+        public BackRotate(HardwareMap hardwareMap) {
             ViperSlidel = hardwareMap.get(Servo.class, "ViperSlidel");
             ViperSlider = hardwareMap.get(Servo.class, "ViperSlider");
             BackClawGrab = hardwareMap.get(Servo.class, "BackClawGrab");
         }
+
         public class BackRotateTransfer implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -245,13 +250,15 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
-        public Action BackRotateTransfer(){
+
+        public Action BackRotateTransfer() {
             return new BackRotateTransfer();
         }
+
         public class ToDrop implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -261,13 +268,15 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
-        public Action ToDrop(){
+
+        public Action ToDrop() {
             return new ToDrop();
         }
+
         public class Vertical implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -277,23 +286,27 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
-        public Action Vertical(){
+
+        public Action Vertical() {
             return new Vertical();
         }
     }
+
     public class FrontRotate {
         private Servo Misumil;
         private Servo Misumir;
         private Servo FrontClawGrab;
-        public FrontRotate(HardwareMap hardwareMap){
+
+        public FrontRotate(HardwareMap hardwareMap) {
             Misumil = hardwareMap.get(Servo.class, "Misumil");
             Misumir = hardwareMap.get(Servo.class, "Misumir");
             FrontClawGrab = hardwareMap.get(Servo.class, "FrontClawGrab");
         }
+
         public class FrontRotateTransfer implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -303,16 +316,18 @@ public class RightRedAuto extends LinearOpMode {
                 //sleep(500);
                 int delay = 500; // number of milliseconds to sleep
                 long start = System.currentTimeMillis();
-                while(start >= System.currentTimeMillis() - delay);
+                while (start >= System.currentTimeMillis() - delay) ;
                 return false;
             }
         }
-        public Action FrontRotateTransfer(){
+
+        public Action FrontRotateTransfer() {
             return new FrontRotateTransfer();
         }
     }
+
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         ClawRear BackClawGrab = new ClawRear(hardwareMap);
         Lift lift = new Lift(hardwareMap);
         //Lift SlideMotorr = new Lift(hardwareMap);
@@ -335,7 +350,7 @@ public class RightRedAuto extends LinearOpMode {
                 //.forward(15)
                 //.strafeTo(new Vector2d(12, -40))
                 .turn(Math.toRadians(90))
-                .strafeToConstantHeading(new Vector2d(-40,-40))
+                .strafeToConstantHeading(new Vector2d(-40, -40))
                 //new VelConstraint(20.0)
                 //.lineToX(-46)
                 .turn(Math.toRadians(-135))
@@ -358,7 +373,7 @@ public class RightRedAuto extends LinearOpMode {
         //sleep(2000);
         int delay = 2000; // number of milliseconds to sleep
         long start = System.currentTimeMillis();
-        while(start >= System.currentTimeMillis() - delay);
+        while (start >= System.currentTimeMillis() - delay) ;
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(

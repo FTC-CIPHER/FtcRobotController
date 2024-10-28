@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode;
+
 import android.hardware.usb.UsbConfiguration;
 import android.transition.Slide;
 import android.widget.HorizontalScrollView;
-
-
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -18,21 +17,15 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 //import org.firstinspires.ftc.teamcode;
-
-
 
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-
-
-@TeleOp(name="LinearSlideTesting")
+@TeleOp(name = "LinearSlideTesting")
 public class LinearSlideTesting extends LinearOpMode {
     double speedCoefficient = 0.5;
     double GyroYawDisplay;
@@ -90,14 +83,11 @@ public class LinearSlideTesting extends LinearOpMode {
     private DcMotor driveMotorFrontRight;
     private DcMotor driveMotorBackLeft;
     private DcMotor driveMotorBackRight;
+
     @Override
 
 
-
-
     public void runOpMode() {
-
-
 
 
         LinearSlideBackLeft = hardwareMap.get(Servo.class, "HiTechl");
@@ -109,7 +99,7 @@ public class LinearSlideTesting extends LinearOpMode {
         SlideMotorl = hardwareMap.get(DcMotorEx.class, "SlideMotorl");
         SlideMotorr = hardwareMap.get(DcMotorEx.class, "SlideMotorr");
         FrontClawGrab = hardwareMap.get(Servo.class, "FrontClawGrab");
-        FrontClawRoll = hardwareMap.get(Servo.class,"ClawRoll");
+        FrontClawRoll = hardwareMap.get(Servo.class, "ClawRoll");
         BackClawGrab = hardwareMap.get(Servo.class, "BackClawGrab");
         driveMotorFrontLeft = hardwareMap.get(DcMotor.class, "leftFront");
         driveMotorFrontRight = hardwareMap.get(DcMotor.class, "rightFront");
@@ -118,13 +108,9 @@ public class LinearSlideTesting extends LinearOpMode {
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
 
-
-
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
-
-
 
 
         imu.initialize(parameters);
@@ -138,10 +124,8 @@ public class LinearSlideTesting extends LinearOpMode {
         SlideMotorr.setMode((DcMotor.RunMode.RUN_USING_ENCODER));
 
 
-
-
         waitForStart();
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
             GamepadLeftY = gamepad1.left_stick_y;
             GamepadLeftX = gamepad1.left_stick_x;
             GamepadRightY = gamepad1.right_stick_y;
@@ -151,12 +135,8 @@ public class LinearSlideTesting extends LinearOpMode {
             Gamepad2RightX = gamepad2.right_stick_x;
 
 
-
-
             GyroYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
             GyroYawDisplay = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-
-
 
 
             MecanumTheta = Math.atan2(-GamepadLeftY, GamepadLeftX);
@@ -167,14 +147,10 @@ public class LinearSlideTesting extends LinearOpMode {
             MecanumMax = Math.max(Math.abs(MecanumSin), Math.abs(MecanumCos));
 
 
-
-
             LeftFrontDrivePower = (MecanumPower * MecanumCos / MecanumMax + GamepadRightX) * speedCoefficient;
             RightFrontDrivePower = (MecanumPower * MecanumSin / MecanumMax - GamepadRightX) * speedCoefficient;
             LeftBackDrivePower = (MecanumPower * MecanumSin / MecanumMax + GamepadRightX) * speedCoefficient;
             RightBackDrivePower = (MecanumPower * MecanumCos / MecanumMax - GamepadRightX) * speedCoefficient;
-
-
 
 
             double maxPower = Math.max(Math.max(Math.abs(LeftFrontDrivePower), Math.abs(RightFrontDrivePower)),
@@ -187,8 +163,6 @@ public class LinearSlideTesting extends LinearOpMode {
             }
 
 
-
-
             if (gamepad1.left_trigger == 1) {
                 speedCoefficient = 1.0;
             } else {
@@ -196,193 +170,177 @@ public class LinearSlideTesting extends LinearOpMode {
             }
 
 
-
-
-
-
-
-
-            if (BackClawCycle == 1){
+            if (BackClawCycle == 1) {
                 BackClawGrab.setPosition(0.525);
-            }else{
-                if(BackClawCycle == 2){
+            } else {
+                if (BackClawCycle == 2) {
                     BackClawGrab.setPosition(0.75);
-                }else{
-                    if (BackClawCycle == 3){
+                } else {
+                    if (BackClawCycle == 3) {
                         BackClawGrab.setPosition(0.9);
-                    }else{
+                    } else {
                         BackClawCycle = 1;
                     }
                 }
             }
-            if (FrontClawCycle == 1){
+            if (FrontClawCycle == 1) {
                 FrontClawGrab.setPosition(0.525);
-            }else{
-                if(FrontClawCycle == 2){
+            } else {
+                if (FrontClawCycle == 2) {
                     FrontClawGrab.setPosition(0.75);
-                }else{
-                    if (FrontClawCycle == 3){
+                } else {
+                    if (FrontClawCycle == 3) {
                         FrontClawGrab.setPosition(0.9);
-                    }else{
+                    } else {
                         FrontClawCycle = 1;
                     }
                 }
             }
 
 
-
-
-            if (HorizontalSlideControl){
-                LinearSlideBackLeftCurrentPosition += (-Gamepad2LeftY*0.0005);
-                LinearSlideBackRightCurrentPostion += (Gamepad2LeftY*0.0005);
-                MisumiLeftCurrentPosition += (Gamepad2RightY*0.001);
-                MisumiRightCurrentPosition += (-Gamepad2RightY*0.001);
-                FrontClawRollPosition += (Gamepad2RightX*0.006);
+            if (HorizontalSlideControl) {
+                LinearSlideBackLeftCurrentPosition += (-Gamepad2LeftY * 0.0005);
+                LinearSlideBackRightCurrentPostion += (Gamepad2LeftY * 0.0005);
+                MisumiLeftCurrentPosition += (Gamepad2RightY * 0.001);
+                MisumiRightCurrentPosition += (-Gamepad2RightY * 0.001);
+                FrontClawRollPosition += (Gamepad2RightX * 0.006);
             }
-            FrontClawRollPosition = Math.max(Math.min(FrontClawRollPosition,1),0);
-            MisumiLeftCurrentPosition = Math.max(Math.min(MisumiLeftCurrentPosition,1),0);
-            MisumiRightCurrentPosition = Math.max(Math.min(MisumiRightCurrentPosition,1),0);
-            LinearSlideBackLeftCurrentPosition = Math.max(Math.min(LinearSlideBackLeftCurrentPosition,0.5455),0.5135);
-            LinearSlideBackRightCurrentPostion = Math.max(Math.min(LinearSlideBackRightCurrentPostion,0.4928),0.4628);
+            FrontClawRollPosition = Math.max(Math.min(FrontClawRollPosition, 1), 0);
+            MisumiLeftCurrentPosition = Math.max(Math.min(MisumiLeftCurrentPosition, 1), 0);
+            MisumiRightCurrentPosition = Math.max(Math.min(MisumiRightCurrentPosition, 1), 0);
+            LinearSlideBackLeftCurrentPosition = Math.max(Math.min(LinearSlideBackLeftCurrentPosition, 0.5455), 0.5135);
+            LinearSlideBackRightCurrentPostion = Math.max(Math.min(LinearSlideBackRightCurrentPostion, 0.4928), 0.4628);
 
 
-
-
-            if(gamepad2.dpad_up){
-                if(!Gamepad2DpadUp){
-                    if(OverrideMode){
+            if (gamepad2.dpad_up) {
+                if (!Gamepad2DpadUp) {
+                    if (OverrideMode) {
                         OverrideMode = false;
                         SlideMotorr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         SlideMotorl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         SlideLeftCurrentPosition = 0;
                         SlideRightCurrentPosition = 0;
-                    }else{
+                    } else {
                         OverrideMode = true;
                     }
                 }
                 Gamepad2DpadUp = true;
-            }else{
+            } else {
                 Gamepad2DpadUp = false;
             }
 
 
-
-
-            if(gamepad2.square){
-                if(!Gamepad2Square){
+            if (gamepad2.square) {
+                if (!Gamepad2Square) {
                     TransitMode();
                 }
                 Gamepad2Square = true;
-            }else{
+            } else {
                 Gamepad2Square = false;
             }
 
 
-
-
-            if (gamepad2.triangle){
+            if (gamepad2.triangle) {
                 GrabMode();
             }
-            if (gamepad2.circle){
+            if (gamepad2.circle) {
                 OuttakeMode();
             }
-            if(gamepad1.circle){
+            if (gamepad1.circle) {
                 imu.resetYaw();
             }
-            if (CurrentMode.equals("GrabMode")){
-                if(gamepad2.cross){
-                    if(!Gamepad2Cross){
+            if (CurrentMode.equals("GrabMode")) {
+                if (gamepad2.cross) {
+                    if (!Gamepad2Cross) {
                         FrontClawCycle += 1;
                     }
                     Gamepad2Cross = true;
-                }else{
+                } else {
                     Gamepad2Cross = false;
                 }
             }
-            if (CurrentMode.equals("Transit")){
+            if (CurrentMode.equals("Transit")) {
                 TransitTime += 50;
-                if(TransitTime == 1000){
+                if (TransitTime == 1000) {
                     BackClawCycle = 1;
                     FrontClawRollPosition = 0.835;
                 }
-                if(TransitTime == 3000){
+                if (TransitTime == 3000) {
                     MisumiRightCurrentPosition = 0.33;
                     MisumiLeftCurrentPosition = 0.67;
                 }
-                if(TransitTime == 5000){
+                if (TransitTime == 5000) {
                     MisumiLeftCurrentPosition = 0.0355;
                     MisumiRightCurrentPosition = 0.9645;
                     FrontClawRollPosition = 0.5;
                 }
-                if(TransitTime == 7000){
+                if (TransitTime == 7000) {
                     LinearSlideBackLeftCurrentPosition = 0.5193;
                     LinearSlideBackRightCurrentPostion = 0.4881;
                 }
-                if(TransitTime == 9000){
+                if (TransitTime == 9000) {
                     ViperSlideLeftCurrentPosition = 0.8699;
                     ViperSlideRightCurrentPosition = 0.1301;
                 }
-                if(TransitTime == 11000){
+                if (TransitTime == 11000) {
                     BackClawCycle = 3;
                 }
-                if(TransitTime == 13000){
+                if (TransitTime == 13000) {
                     FrontClawCycle = 1;
                 }
-                if(TransitTime == 14500){
+                if (TransitTime == 14500) {
                     OuttakeMode();
                 }
             }
-            if (CurrentMode.equals("Outtake")){
+            if (CurrentMode.equals("Outtake")) {
                 OuttakeTime += 50;
-                if(OuttakeTime == 3000){
+                if (OuttakeTime == 3000) {
                     LinearSlideBackLeftCurrentPosition = 0.5135;
                     LinearSlideBackRightCurrentPostion = 0.4928;
                 }
-                if ((WaitForBackClawDrop !=0) && (OuttakeTime == WaitForBackClawDrop)){
+                if ((WaitForBackClawDrop != 0) && (OuttakeTime == WaitForBackClawDrop)) {
                     BackClawCycle = 1;
                 }
-                if(WaitForBackClawFront != 0 && OuttakeTime == WaitForBackClawFront){
+                if (WaitForBackClawFront != 0 && OuttakeTime == WaitForBackClawFront) {
                     ViperSlideLeftCurrentPosition = 0.5;
                     ViperSlideRightCurrentPosition = 0.5;
 
 
                 }
-                if(WaitForBackClawReturn != 0 && OuttakeTime == WaitForBackClawReturn){
+                if (WaitForBackClawReturn != 0 && OuttakeTime == WaitForBackClawReturn) {
                     SlideRightCurrentPosition = -100;
                     SlideLeftCurrentPosition = -100;
                     GrabMode();
                 }
-                if(gamepad2.cross){
-                    if(!Gamepad2Cross){
+                if (gamepad2.cross) {
+                    if (!Gamepad2Cross) {
                         BackClawCycle += 1;
                     }
                     Gamepad2Cross = true;
-                }else{
+                } else {
                     Gamepad2Cross = false;
                 }
-                if(gamepad2.right_stick_button){
-                    WaitForBackClawDrop = OuttakeTime+1000;
-                    WaitForBackClawFront = OuttakeTime+2000;
-                    WaitForBackClawReturn = OuttakeTime+3000;
+                if (gamepad2.right_stick_button) {
+                    WaitForBackClawDrop = OuttakeTime + 1000;
+                    WaitForBackClawFront = OuttakeTime + 2000;
+                    WaitForBackClawReturn = OuttakeTime + 3000;
                     ViperSlideLeftCurrentPosition = 0.175;
                     ViperSlideRightCurrentPosition = 0.825;
                 }
-                SlideLeftCurrentPosition += (Math.round(-Gamepad2LeftY)*50);
-                SlideRightCurrentPosition += (Math.round(-Gamepad2LeftY)*50);
-                ViperSlideLeftCurrentPosition += (-Gamepad2RightY*0.006);
-                ViperSlideRightCurrentPosition += (Gamepad2RightY*0.006);
+                SlideLeftCurrentPosition += (Math.round(-Gamepad2LeftY) * 50);
+                SlideRightCurrentPosition += (Math.round(-Gamepad2LeftY) * 50);
+                ViperSlideLeftCurrentPosition += (-Gamepad2RightY * 0.006);
+                ViperSlideRightCurrentPosition += (Gamepad2RightY * 0.006);
             }
-            ViperSlideLeftCurrentPosition = Math.max(Math.min(ViperSlideLeftCurrentPosition,1),0);
-            ViperSlideRightCurrentPosition = Math.max(Math.min(ViperSlideRightCurrentPosition,1),0);
-            if(OverrideMode){
-                SlideLeftCurrentPosition = (Math.min(SlideLeftCurrentPosition,2800));
-                SlideRightCurrentPosition = (Math.min(SlideRightCurrentPosition,2800));
-            }else{
-                SlideLeftCurrentPosition = Math.max(Math.min(SlideLeftCurrentPosition,2800),0);
-                SlideRightCurrentPosition = Math.max(Math.min(SlideRightCurrentPosition,2800),0);
+            ViperSlideLeftCurrentPosition = Math.max(Math.min(ViperSlideLeftCurrentPosition, 1), 0);
+            ViperSlideRightCurrentPosition = Math.max(Math.min(ViperSlideRightCurrentPosition, 1), 0);
+            if (OverrideMode) {
+                SlideLeftCurrentPosition = (Math.min(SlideLeftCurrentPosition, 2800));
+                SlideRightCurrentPosition = (Math.min(SlideRightCurrentPosition, 2800));
+            } else {
+                SlideLeftCurrentPosition = Math.max(Math.min(SlideLeftCurrentPosition, 2800), 0);
+                SlideRightCurrentPosition = Math.max(Math.min(SlideRightCurrentPosition, 2800), 0);
             }
-
-
 
 
             FrontClawRoll.setPosition(FrontClawRollPosition);
@@ -398,8 +356,6 @@ public class LinearSlideTesting extends LinearOpMode {
             SlideMotorr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             SlideMotorl.setPower(1);
             SlideMotorr.setPower(1);
-
-
 
 
             driveMotorFrontLeft.setPower(LeftFrontDrivePower);
@@ -433,9 +389,7 @@ public class LinearSlideTesting extends LinearOpMode {
     }
 
 
-
-
-    public void GrabMode(){
+    public void GrabMode() {
         CurrentMode = "GrabMode";
         HorizontalSlideControl = true;
         FrontClawCycle = 1;
@@ -448,9 +402,7 @@ public class LinearSlideTesting extends LinearOpMode {
     }
 
 
-
-
-    public void TransitMode(){
+    public void TransitMode() {
         CurrentMode = "Transit";
         HorizontalSlideControl = false;
         FrontClawCycle = 3;
@@ -458,10 +410,9 @@ public class LinearSlideTesting extends LinearOpMode {
         TransitTime = 0;
 
 
-
-
     }
-    public void OuttakeMode(){
+
+    public void OuttakeMode() {
         CurrentMode = "Outtake";
         HorizontalSlideControl = false;
         FrontClawCycle = 1;
@@ -473,8 +424,6 @@ public class LinearSlideTesting extends LinearOpMode {
         WaitForBackClawDrop = 0;
         WaitForBackClawReturn = 0;
         OuttakeTime = 0;
-
-
 
 
     }
